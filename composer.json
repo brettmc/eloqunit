@@ -1,0 +1,29 @@
+{
+    "name": "eloqunit/eloqunit",
+    "description": "A dbunit-like tool for phpunit and eloquent",
+    "type": "library",
+    "scripts": {
+        "test": "phpunit",
+        "check": "php-cs-fixer fix --dry-run",
+        "fix": "php-cs-fixer fix"
+    },
+    "require": {
+        "slim/slim": "^3.11",
+        "illuminate/database": "^5.7",
+        "phpunit/phpunit": ">6",
+        "friendsofphp/php-cs-fixer": "^2.13"
+    },
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "Brett McBride",
+            "email": "brett.a.mcbride@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Eloqunit\\": "src/",
+            "App\\": "example/"
+        }
+    }
+}
