@@ -1,13 +1,14 @@
 <?php
-namespace Eloqunit\Test\Integration;
+namespace Eloqunit\Test\Unit;
 
 use Eloqunit\Constraint;
 use Eloqunit\Eloqunit;
 use Illuminate\Database\Capsule\Manager;
 
-class EloqunitIntegrationTest extends Eloqunit
+class EloqunitTest extends Eloqunit
 {
     private static $db = null;
+
     public function setup()
     {
         if (null === static::$db) {
@@ -19,11 +20,17 @@ class EloqunitIntegrationTest extends Eloqunit
             ]);
             static::$db->setAsGlobal();
             static::$db->bootEloquent();
-            static::$db->getConnection()->statement('create table foo (id string, value string, created_at timestamp default CURRENT_DATE, updated_at timestamp)');
         }
+        static::$db->getConnection()->statement('create table foo (id string, value string, created_at timestamp default CURRENT_DATE, updated_at timestamp)');
     }
 
-    public function getDatabase(): \Illuminate\Database\Capsule\Manager {
+    public function tearDown()
+    {
+        static::$db->getConnection()->statement('drop table foo');
+    }
+
+    public function getDatabase(): Manager
+    {
         return static::$db;
     }
 
@@ -55,5 +62,16 @@ class EloqunitIntegrationTest extends Eloqunit
             'updated_at' => Constraint::IsNull(),
         ]);
         $this->assertRowMatches('foo', ['id' => 'foo'], ['value' => 'bar']);
+    }
+
+    public function testAssertRowCountWithConstraints()
+    {
+        $this->seed('foo', [
+            ['id' => '1', 'value' => null],
+            ['id' => '2', 'value' => null],
+            ['id' => '3', 'value' => 'null'],
+        ]);
+        $this->assertRowCount(2, 'foo', ['value' => Constraint::IsNull()], 'two null rows');
+        $this->assertRowCount(1, 'foo', ['value' => Constraint::IsNotNull()], 'one not-null row');
     }
 }

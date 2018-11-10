@@ -9,14 +9,12 @@ abstract class Eloqunit extends TestCase implements EloqunitInterface
     {
         $db = $this->getDatabase();
         $db->getConnection()->beginTransaction();
-        parent::setup();
     }
 
     public function tearDown()
     {
         $db = $this->getDatabase();
         $db->getConnection()->rollback();
-        parent::tearDown();
     }
 
     /**
@@ -30,6 +28,14 @@ abstract class Eloqunit extends TestCase implements EloqunitInterface
         $this->getDatabase()->table($table)->insert($data);
     }
 
+    /**
+     * Assert the rowcount on a table, optionally filtering by $keys
+     * @param int $expected
+     * @param string $table
+     * @param array $keys
+     * @param string $message
+     * @return void
+     */
     public function assertRowCount(int $expected, string $table, array $keys = [], string $message = ''): void
     {
         $this->assertEquals($expected, $this->rowCount($table, $keys), $message);
@@ -64,7 +70,16 @@ abstract class Eloqunit extends TestCase implements EloqunitInterface
         $db = $this->getDatabase();
         $select = $db->table($table)->select();
         foreach ($keys as $key => $value) {
-            $select->where($key, $value);
+            switch (is_object($value) ? get_class($value) : 'string') {
+                case Constraints\IsNotNull::class:
+                    $select->whereNotNull($key);
+                    break;
+                case Constraints\IsNull::class:
+                    $select->whereNull($key);
+                    break;
+                default:
+                    $select->where($key, $value);
+            }
         }
         return $select->count();
     }
@@ -86,7 +101,7 @@ abstract class Eloqunit extends TestCase implements EloqunitInterface
         }
         $row = $select->first();
         if (!$row) {
-            $this->fail('No matching row was found');
+            $this->fail('No matching row was found'); //@codeCoverageIgnore
         }
         foreach ($fields as $key => $value) {
             switch (is_object($value) ? get_class($value) : 'string') {

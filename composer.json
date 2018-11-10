@@ -8,9 +8,11 @@
         "fix": "php-cs-fixer fix"
     },
     "require": {
-        "slim/slim": "^3.11",
         "illuminate/database": "^5.7",
-        "phpunit/phpunit": ">6",
+        "phpunit/phpunit": ">6"
+    },
+    "require-dev": {
+        "slim/slim": "^3.11",
         "friendsofphp/php-cs-fixer": "^2.13"
     },
     "license": "BSD",
@@ -22,8 +24,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Eloqunit\\": "src/",
-            "App\\": "example/"
+            "Eloqunit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Eloqunit\\Example\\Slim\\": "example/Slim/src/",
+            "Eloqunit\\Test\\": "tests/"
         }
     }
 }

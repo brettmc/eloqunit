@@ -16,4 +16,3 @@ class Constraint
         return new IsNotNull();
     }
 }
-

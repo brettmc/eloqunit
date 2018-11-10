@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace Eloqunit\Example\Slim;
 
 use Slim\App as Slim;
 
