@@ -7,22 +7,25 @@
         "check": "php-cs-fixer fix --dry-run",
         "fix": "php-cs-fixer fix"
     },
-    "require": {
-        "illuminate/database": "^5.7",
-        "phpunit/phpunit": ">6"
-    },
-    "require-dev": {
-        "slim/slim": "^3.11",
-        "friendsofphp/php-cs-fixer": "^2.13",
-        "php-coveralls/php-coveralls": "^2"
-    },
     "license": "BSD",
     "authors": [
         {
-            "name": "Brett McBride",
-            "email": "brett.a.mcbride@gmail.com"
+            "name": "Brett McBride"
         }
     ],
+    "homepage": "https://github.com/brettmc/eloqunit",
+    "support": {
+        "issues": "https://github.com/brettmc/eloqunit/issues"
+    },
+    "require": {
+        "illuminate/database": "^5",
+        "phpunit/phpunit": ">6"
+    },
+    "require-dev": {
+        "slim/slim": "^3",
+        "friendsofphp/php-cs-fixer": "^2",
+        "php-coveralls/php-coveralls": "^2"
+    },
     "autoload": {
         "psr-4": {
             "Eloqunit\\": "src/"
