@@ -7,7 +7,7 @@
         "check": "php-cs-fixer fix --dry-run",
         "fix": "php-cs-fixer fix"
     },
-    "license": "BSD",
+    "license": "MIT",
     "authors": [
         {
             "name": "Brett McBride"
