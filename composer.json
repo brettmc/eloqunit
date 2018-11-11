@@ -13,7 +13,8 @@
     },
     "require-dev": {
         "slim/slim": "^3.11",
-        "friendsofphp/php-cs-fixer": "^2.13"
+        "friendsofphp/php-cs-fixer": "^2.13",
+        "php-coveralls/php-coveralls": "^2"
     },
     "license": "BSD",
     "authors": [
