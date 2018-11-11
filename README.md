@@ -12,6 +12,14 @@ An eloquent-based database testing library for phpunit, inspired by dbunit.
 * provides a `seed` method to quickly populate database tables
 * support for null/not null on assertions
 
+## Installation
+
+Install via composer:
+
+```
+$ composer require eloqunit/eloqunit
+```
+
 ## Usage
 
 Instead of extending `PHPUnit\Framework\TestCase`, have your tests extend `Eloqunit\TestCase`.
