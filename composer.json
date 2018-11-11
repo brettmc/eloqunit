@@ -2,6 +2,11 @@
     "name": "eloqunit/eloqunit",
     "description": "A dbunit-like tool for phpunit and eloquent",
     "type": "library",
+    "keywords": [
+        "eloquent",
+        "phpunit",
+        "testing"
+    ],
     "scripts": {
         "test": "phpunit",
         "check": "php-cs-fixer fix --dry-run",
