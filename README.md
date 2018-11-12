@@ -5,6 +5,10 @@
 
 An eloquent-based database testing library for phpunit, inspired by dbunit.
 
+This works well with Slim Framework (and possibly others) which allows you to create an application, then dispatch multiple requests
+to it. By using database transactions for each test, you do not need to "tear down" data from prior tests, nor deal with artifacts
+left over from failed tests.
+
 ## Features
 
 * runs test cases inside a database transaction
