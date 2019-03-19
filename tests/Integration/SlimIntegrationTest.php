@@ -18,7 +18,7 @@ class SlimIntegrationTest extends Eloqunit
         return self::$app->getContainer()->get('eloquent');
     }
 
-    public function setup()
+    public function setup(): void
     {
         if (!self::$app) {
             self::$app = App::create();
