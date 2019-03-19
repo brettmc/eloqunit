@@ -22,9 +22,11 @@ class FooTest extends Eloqunit
             static::$app = App::create();
         }
         parent::setup();
-        $this->seed('foo', [
-            ['id' => 1, 'value' => 'foo'],
-            ['id' => 2, 'value' => 'bar'],
+        $this->seedTables([
+            'foo' => [
+                ['id' => 1, 'value' => 'foo'],
+                ['id' => 2, 'value' => 'bar'],
+            ],
         ]);
     }
 

@@ -40,9 +40,28 @@ Seed $table with rows contained in $data.
 ```php
 $this->seed('mytable', [
   ['id' => '1', 'name' => 'row.one', 'active' => true, 'foo' => null],
-  ['id' => '2', 'name' => 'row.two', 'active' => false, 'foo' => 'bar'],
+  ['2', 'row.two', false, 'bar'],
 ]);
 
+```
+
+### `seedTables(array $data)`:
+
+Seed multiple tables. Array keys represent table names, and array values represent table rows.
+
+```php
+$this->seedTables(
+    'mytable' => [
+        ['id' => 1, 'name' => 'row.one', 'active' => true],
+        [2, 'row.two', true],
+        [3, 'row.three', true],
+    ],
+    'myothertable' => [
+        ['key' => 'foo', 'description' => 'description of foo'],
+        ['bar', 'bar description'],
+        ['baz', 'baz description'],
+    ],
+);
 ```
 
 ### `assertRowCount(int $expected, string $table, array $where, string $message)`:

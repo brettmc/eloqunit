@@ -23,9 +23,21 @@ abstract class Eloqunit extends TestCase implements EloqunitInterface
      * @param array $data [['foo' => 'bar'], ['foo' => 'baz'], ...]
      * @return void
      */
-    public function seed(string $table, array $data): void
+    public function seed($table, $data): void
     {
         $this->getDatabase()->table($table)->insert($data);
+    }
+
+    /**
+     * Seed multiple database tables. Array keys represent table names, and values are an array of rows.
+     * @param array $data ['table_one' => [[<row>,<row>]], 'table_two' => [[<row>,<row>]]
+     * @return void
+     */
+    public function seedTables(array $data): void
+    {
+        foreach ($data as $table => $data) {
+            $this->seed($table, $data);
+        }
     }
 
     /**

@@ -39,10 +39,30 @@ class EloqunitTest extends Eloqunit
         $this->assertRowCount(0, 'foo');
     }
 
+    public function testSeedMultipleTables()
+    {
+        static::$db->getConnection()->statement('create table bar (id string, value string)');
+        $this->assertRowCount(0, 'foo');
+        $this->assertRowCount(0, 'bar');
+        $this->seedTables([
+            'foo' => [
+                ['id' => 'id.one', 'value' => 'value.one'],
+                ['id.two', 'value.two'],
+            ],
+            'bar' => [
+                ['id' => 'id.one', 'value' => 'value.one'],
+                ['id.two', 'value.two'],
+                ['id.three', 'value.three'],
+            ],
+        ]);
+        $this->assertRowCount(2, 'foo');
+        $this->assertRowCount(3, 'bar');
+    }
+
     public function testSeedAndAssert()
     {
         $this->assertRowCount(0, 'foo');
-        $this->seed('foo', [['id' => 'id.one', 'value' => 'value.one'], ['id' => 'id.two', 'value' => 'value.two']]);
+        $this->seed('foo', [['id' => 'id.one', 'value' => 'value.one'], ['id.two', 'value.two']]);
         $this->assertRowCount(2, 'foo');
         $this->assertRowExists('foo', ['id' => 'id.one']);
         $this->assertRowExists('foo', ['id' => 'id.two']);
