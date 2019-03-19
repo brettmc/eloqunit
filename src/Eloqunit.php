@@ -5,13 +5,13 @@ use PHPUnit\Framework\TestCase;
 
 abstract class Eloqunit extends TestCase implements EloqunitInterface
 {
-    public function setup()
+    public function setup(): void
     {
         $db = $this->getDatabase();
         $db->getConnection()->beginTransaction();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $db = $this->getDatabase();
         $db->getConnection()->rollback();

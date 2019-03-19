@@ -9,7 +9,7 @@ class EloqunitTest extends Eloqunit
 {
     private static $db = null;
 
-    public function setup()
+    public function setup(): void
     {
         if (null === static::$db) {
             static::$db = new Manager();
@@ -24,7 +24,7 @@ class EloqunitTest extends Eloqunit
         static::$db->getConnection()->statement('create table foo (id string, value string, created_at timestamp default CURRENT_DATE, updated_at timestamp)');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         static::$db->getConnection()->statement('drop table foo');
     }
