@@ -1,7 +1,7 @@
 <?php
 use Slim\Http\Environment;
 use Slim\Http\Request;
-use App\App;
+use Eloqunit\Example\Slim\App;
 use Eloqunit\Constraint;
 use Eloqunit\Eloqunit;
 use Illuminate\Database\Capsule\Manager;
@@ -16,25 +16,23 @@ class FooTest extends Eloqunit
         return static::$app->getContainer()['eloquent'];
     }
 
-    public function setup()
+    public function setup(): void
     {
         if (!static::$app) {
             static::$app = App::create();
         }
-        $this->seed('foo', ['id' => 1, 'value' => 'foo']);
-        $this->seed('foo', ['id' => 2, 'value' => 'bar']);
+        parent::setup();
+        $this->seed('foo', [
+            ['id' => 1, 'value' => 'foo'],
+            ['id' => 2, 'value' => 'bar'],
+        ]);
     }
 
-    public function tearDown()
-    {
-        static::$app->getContainer()['eloquent']->getConnection()->rollback();
-    }
-
-    public function testListBar()
+    public function testListFoo()
     {
         $environment = Environment::mock([
             'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/bar',
+            'REQUEST_URI' => '/foo',
         ]);
         $request = Request::createFromEnvironment($environment);
         static::$app->getContainer()['request'] = $request;
@@ -44,11 +42,11 @@ class FooTest extends Eloqunit
         $this->assertCount(2, $result);
     }
 
-    public function testGetBar()
+    public function testGetFoo()
     {
         $environment = Environment::mock([
             'REQUEST_METHOD' => 'GET',
-            'REQUEST_URI' => '/bar/1',
+            'REQUEST_URI' => '/foo/1',
         ]);
         $request = Request::createFromEnvironment($environment);
         static::$app->getContainer()['request'] = $request;
@@ -59,11 +57,11 @@ class FooTest extends Eloqunit
         $this->assertEquals('foo', $result->value);
     }
     
-    public function testPostBar()
+    public function testPostFoo()
     {
         $environment = Environment::mock([
             'REQUEST_METHOD' => 'POST',
-            'REQUEST_URI' => '/bar',
+            'REQUEST_URI' => '/foo',
         ]);
         $body = new \Slim\Http\RequestBody();
         $body->write(json_encode(['id' => 3, 'value' => 'bat']));
@@ -78,12 +76,12 @@ class FooTest extends Eloqunit
         $this->assertRowMatches('foo', ['id' => 3], ['value' => 'bat', 'created_at' => Constraint::IsNotNull(), 'updated_at' => Constraint::IsNull()]);
     }
 
-    public function testDeleteBar()
+    public function testDeleteFoo()
     {
         $this->assertRowExists('foo', ['id' => 2]);
         $environment = Environment::mock([
             'REQUEST_METHOD' => 'DELETE',
-            'REQUEST_URI' => '/bar/2',
+            'REQUEST_URI' => '/foo/2',
         ]);
         $request = Request::createFromEnvironment($environment);
         static::$app->getContainer()['request'] = $request;
@@ -92,12 +90,12 @@ class FooTest extends Eloqunit
         $this->assertRowNotExists('foo', ['id' => 2]);
     }
 
-    public function testUpdateBar()
+    public function testUpdateFoo()
     {
         $this->assertRowExists('foo', ['id' => 2]);
         $environment = Environment::mock([
             'REQUEST_METHOD' => 'PATCH',
-            'REQUEST_URI' => '/bar/2',
+            'REQUEST_URI' => '/foo/2',
         ]);
         $body = new \Slim\Http\RequestBody();
         $body->write(json_encode(['id' => 2, 'value' => 'new.value']));
