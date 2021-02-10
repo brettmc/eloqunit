@@ -9,6 +9,7 @@
     ],
     "scripts": {
         "test": "phpunit",
+        "test:coverage": "XDEBUG_MODE=coverage phpunit --coverage-text",
         "check": "php-cs-fixer fix --dry-run",
         "fix": "php-cs-fixer fix"
     },
@@ -23,7 +24,7 @@
         "issues": "https://github.com/brettmc/eloqunit/issues"
     },
     "require": {
-        "illuminate/database": "^5",
+        "illuminate/database": ">=5",
         "phpunit/phpunit": ">=7"
     },
     "require-dev": {
